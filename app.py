@@ -9,7 +9,7 @@ html = """
 <!doctype html>
 <html>
 <head>
-    <title>Expense Tracker</title>
+    <title>Expense Tracker App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
