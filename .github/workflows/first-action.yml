@@ -1,4 +1,32 @@
-name: First Flask CI
+# name: First Flask CI
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   build:
+#     runs-on: self-hosted
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.10'
+
+#       - name: Install dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
+
+#       - name: Run tests
+#         run: pytest
+
+name: First Flask CI + Temporary Local Run
 
 on:
   push:
@@ -6,7 +34,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-run:
     runs-on: self-hosted
 
     steps:
@@ -25,3 +53,19 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+      - name: Start Flask for testing (will auto-stop)
+        run: |
+          flask run --host=127.0.0.1 --port=5000 &
+          FLASK_PID=$!
+          echo "Flask started with PID $FLASK_PID"
+          echo "Waiting 5 seconds for Flask to start..."
+          sleep 5
+          echo "Testing Flask response..."
+          curl --fail http://127.0.0.1:5000 || (echo "Flask did not respond" && kill $FLASK_PID && exit 1)
+          echo "✅ Flask is running at http://127.0.0.1:5000"
+          echo "⏳ Keeping Flask alive for 2 minutes so you can test..."
+          sleep 120
+          echo "🛑 Time’s up — stopping Flask..."
+          kill $FLASK_PID
+          echo "Flask stopped."
