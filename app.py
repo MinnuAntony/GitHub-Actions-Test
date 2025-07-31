@@ -28,7 +28,7 @@ html = """
     Amount: <input type="number" name="amount" required><br>
     <input type="submit" value="Add Expense">
 
-
+</form>
 </body>
 </html>
 """
