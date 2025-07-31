@@ -1,10 +1,9 @@
-
 name: First Flask CI
 
 on:
   push:
     branches:
-      - main  # Change to 'master' if your default branch is named that
+      - main
 
 jobs:
   build:
@@ -24,5 +23,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Confirm setup
-        run: echo "Flask app environment ready!"
+      - name: Run tests
+        run: pytest
