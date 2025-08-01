@@ -65,7 +65,7 @@ jobs:
           curl --fail http://127.0.0.1:5000 || (echo "Flask did not respond" && kill $FLASK_PID && exit 1)
           echo "✅ Flask is running at http://127.0.0.1:5000"
           echo "⏳ Keeping Flask alive for 2 minutes so you can test..."
-          sleep 120
+          sleep 45
           echo "🛑 Time’s up — stopping Flask..."
           kill $FLASK_PID
           echo "Flask stopped."
